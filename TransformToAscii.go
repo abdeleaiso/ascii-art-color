@@ -19,6 +19,11 @@ func TransformToAscii(input string, filelines []string, sub string, colorN int) 
 	if input == ""{
 		return ""
 	}
+	start, end := IndexSubString(input, sub)
+	//fmt.Println("------------------- ", start ," -------------------------")
+	startInAscii := (int(input[start])-32)*9+1
+	endInAscii := (int(input[end])-32)*9+1
+	fmt.Println("------------------- ", endInAscii ," -------------------------")
 	input = strings.ReplaceAll(input, "\\n", "\n")
 	/*fmt.Println("-----------",input,"-----------")
 	fmt.Println(len(input))
@@ -43,9 +48,6 @@ func TransformToAscii(input string, filelines []string, sub string, colorN int) 
 		return strings.Repeat("\n", len(input))
 	}
 	
-	start, end := IndexSubString(input, sub)
-	startInAscii := (start-32)*9+1
-	endInAscii := (end-32)*9+1
 	
 	var sb strings.Builder
 	
@@ -64,8 +66,12 @@ func TransformToAscii(input string, filelines []string, sub string, colorN int) 
 				}
 				StartIndex := (int(c)-32)*9 + 1
 				//fmt.Print("startIndex=",StartIndex, " | ")
-				if startInAscii == StartIndex && StartIndex+i < endInAscii{
-					fmt.Printf("\033[1;%dm%s\033[0m",colorN,filelines[StartIndex+i])
+				if startInAscii == StartIndex && StartIndex+i < len(filelines){
+					colored := fmt.Sprintf("\033[1;%dm%s\033[0m",colorN,filelines[StartIndex+i])
+					sb.WriteString(colored)
+				}else if  endInAscii == StartIndex && StartIndex+i < len(filelines){
+					colored := fmt.Sprintf("\033[1;%dm%s\033[0m",colorN,filelines[StartIndex+i])
+					sb.WriteString(colored)
 				}else if StartIndex+i < len(filelines){
 					//fmt.Printf("StartIndex+%d=%d\n",i, StartIndex+i)
 					sb.WriteString(filelines[StartIndex+i])
