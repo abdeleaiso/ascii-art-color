@@ -45,7 +45,7 @@ func main() {
 		}
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
-		res := TransformToAscii(input, Filelines, "", -1)
+		res := TransformToAscii(input, Filelines)
 		fmt.Print(res)
 	} else if len(os.Args) == 3 {
 		*color = strings.ToLower(*color)
@@ -62,7 +62,7 @@ func main() {
 		}
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
-		res := TransformToAscii(input, Filelines, "", colorN)
+		res := TransformToAscii(input, Filelines)
 		fmt.Printf("\033[1;%dm", colorN)
 		fmt.Print(res)
 	} else if len(os.Args) == 4 {
@@ -82,20 +82,8 @@ func main() {
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
 		if strings.Contains(input, subinput) {
-			res := TransformToAscii(input, Filelines, subinput, colorN)
+			res := ColorSubAscii(input, Filelines, subinput, colorN)
 			fmt.Print(res)
-			//start, end := removeSubString(input , subinput)
-			/*if start == -1 || end == -1{
-				fmt.Println("Error: out of range substring index")
-				return
-			}
-			firststr := input[:start]
-			laststr := input[end+1:]
-			res1 := TransformToAscii(firststr, Filelines)
-			ascii := TransformToAscii(subinput, Filelines)
-			res2 := fmt.Sprintf("\033[1;%dm%s\033[0m",colorN,ascii)
-			res3 := TransformToAscii(laststr, Filelines)
-			fmt.Print(res1,res2,res3)*/
 		}else{
 			fmt.Println("Error: subinput not found")
 			return
