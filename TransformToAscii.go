@@ -5,21 +5,30 @@ import (
 	"fmt"
 )
 
-func IndexSubString(s, sub string) (int, int){
-	startIndex := strings.Index(s, sub)
-	if startIndex == -1{
-		return -1 , -1
+func IndexSubString(s, sub string) [][2]int{
+	var arr [][2]int
+	offset := 0
+	for {
+		startIndex := strings.Index(s[offset:], sub)
+		if startIndex == -1{
+			break
+		}
+		startIndex += offset
+		endIndex := startIndex + len(sub)-1
+		//modstr := s[:startIndex] + s[startIndex+len(sub):]
+		arr = append(arr, [2]int{startIndex, endIndex})
+		offset = endIndex + 1
 	}
-	endIndex := startIndex + len(sub)-1
-	//modstr := s[:startIndex] + s[startIndex+len(sub):]
-	return startIndex, endIndex
+	return arr
 }
 
 func TransformToAscii(input string, filelines []string, sub string, colorN int) string{
 	if input == ""{
 		return ""
 	}
-	start, end := IndexSubString(input, sub)
+	nbr := strings.Count(input,sub)
+	slice := make([][2]int, nbr)
+	slice = IndexSubString(input, sub)
 	/*fmt.Println("------------------- ", start ," -------------------------")
 	fmt.Println("------------------- ", end ," -------------------------")
 	startInAscii := (int(input[start])-32)*9+1
@@ -68,7 +77,15 @@ func TransformToAscii(input string, filelines []string, sub string, colorN int) 
 				}
 				StartIndex := (int(c)-32)*9 + 1
 				//fmt.Println("file=",filelines[StartIndex+i])
-				if (pos >= start && pos <= end) && StartIndex < len(filelines){
+				shouldbecolored := false
+				for i:= 0; i < nbr; i++{
+					if (pos >= slice[i][0] && pos <= slice[i][1]){
+						shouldbecolored = true
+						break
+					}
+				}
+
+				if shouldbecolored && StartIndex < len(filelines){
 					colored := fmt.Sprintf("\033[2;%dm%s\033[0m",colorN,filelines[StartIndex+i])
 					sb.WriteString(colored)
 				}else if StartIndex+i < len(filelines){
