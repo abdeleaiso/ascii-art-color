@@ -14,17 +14,18 @@ It is recommended to use the decimal, octal or hex representation as escape code
 */
 
 func ColorMap(color string) int{
-	m := make(map[string]int)
-	m["black"]=30 
-	m["red"]=31
-	m["green"]=32
-	m["yellow"]=33
-	m["blue"]=34
-	m["purple"]=35
-	m["cyan"]=36
-	m["white"]=37
-	m["default"]=39
-	m["gray"]=90
+	m := map[string]int{
+		"black":          30,
+        "red":            31,
+        "green":          32,
+        "yellow":         33,
+        "blue":           34,
+        "purple":         35,
+        "cyan":           36,
+        "white":          37,
+        "default":        39,
+        "gray":           90,
+	}
 	for k,v := range m{
 		if color == k{
 			return v
