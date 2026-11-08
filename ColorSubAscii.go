@@ -65,7 +65,12 @@ func ColorSubAscii(input string, filelines []string, sub string, colorN int) str
 				}
 
 				if shouldbecolored && StartIndex < len(filelines){
-					colored := fmt.Sprintf("\033[2;%dm%s\033[0m",colorN,filelines[StartIndex+i])
+					var colored string
+					if colorN == 38{
+						colored = fmt.Sprintf("\033[%d;5;208m%s\033[0m",colorN,filelines[StartIndex+i])
+					}else{
+						colored = fmt.Sprintf("\033[2;%dm%s\033[0m",colorN,filelines[StartIndex+i])
+					}
 					sb.WriteString(colored)
 				}else if StartIndex+i < len(filelines){
 					sb.WriteString(filelines[StartIndex+i])

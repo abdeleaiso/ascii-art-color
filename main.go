@@ -18,6 +18,7 @@ func ColorMap(color string) int{
 		"black":          30,
         "red":            31,
         "green":          32,
+		"orange":		  38,
         "yellow":         33,
         "blue":           34,
         "purple":         35,
@@ -64,8 +65,11 @@ func main() {
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
 		res := TransformToAscii(input, Filelines)
-		fmt.Printf("\033[1;%dm", colorN)
-		fmt.Print(res)
+		if *color == "orange"{
+			fmt.Printf("\033[%d;5;208m%s\033[0m",colorN,res)
+		}else{
+			fmt.Printf("\033[1;%dm%s\033[0m", colorN,res)
+		}
 	} else if len(os.Args) == 4 {
 		*color = strings.ToLower(*color)
 		colorN := ColorMap(*color)
@@ -86,7 +90,7 @@ func main() {
 			res := ColorSubAscii(input, Filelines, subinput, colorN)
 			fmt.Print(res)
 		}else{
-			fmt.Println("Error: subinput not found")
+			fmt.Println("Usage: go run . [OPTION] [STRING]")
 			return
 		}
 	} else {
