@@ -13,26 +13,31 @@ are not guaranteed to work in all languages and compilers.
 It is recommended to use the decimal, octal or hex representation as escape code.
 */
 
-func ColorMap(color string) int{
-	m := map[string]int{
-		"black":          30,
-        "red":            31,
-        "green":          32,
-		"orange":		  38,
-        "yellow":         33,
-        "blue":           34,
-        "purple":         35,
-        "cyan":           36,
-        "white":          37,
-        "default":        39,
-        "gray":           90,
+func ColorMap(color string) string{
+	m := map[string]string{
+		"black":		"\033[1;30m",
+        "red":			"\033[1;31m",
+        "green":		"\033[1;32m",
+        "yellow":		"\033[1;33m",
+        "blue":			"\033[1;34m",
+        "purple":		"\033[1;35m",
+        "cyan":			"\033[1;36m",
+        "white":		"\033[1;37m",
+        "default":		"\033[1;39m",
+        "gray":			"\033[1;90m",
+
+		"orange":		"\033[38;5;208m",
+        "pink":			"\033[38;5;205m",
+        "gold":			"\033[38;5;220m",
+        "brown":		"\033[38;5;94m",
+		"violet":		"\033[38;5;177m",
 	}
 	for k,v := range m{
 		if color == k{
 			return v
 		} 
 	}
-	return -1
+	return ""
 }
 
 func main() {
@@ -51,8 +56,8 @@ func main() {
 		fmt.Print(res)
 	} else if len(os.Args) == 3 {
 		*color = strings.ToLower(*color)
-		colorN := ColorMap(*color)
-		if colorN == -1{
+		colorTheme := ColorMap(*color)
+		if colorTheme == ""{
 			fmt.Println("Error: color not available")
 			return
 		}
@@ -65,15 +70,11 @@ func main() {
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
 		res := TransformToAscii(input, Filelines)
-		if *color == "orange"{
-			fmt.Printf("\033[%d;5;208m%s\033[0m",colorN,res)
-		}else{
-			fmt.Printf("\033[1;%dm%s\033[0m", colorN,res)
-		}
+		fmt.Printf("%s%s\033[0m",colorTheme,res)
 	} else if len(os.Args) == 4 {
 		*color = strings.ToLower(*color)
-		colorN := ColorMap(*color)
-		if colorN == -1{
+		colorTheme := ColorMap(*color)
+		if colorTheme == ""{
 			fmt.Println("Error: color not available")
 			return
 		}
@@ -87,7 +88,7 @@ func main() {
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
 		if strings.Contains(input, subinput) {
-			res := ColorSubAscii(input, Filelines, subinput, colorN)
+			res := ColorSubAscii(input, Filelines, subinput, colorTheme)
 			fmt.Print(res)
 		}else{
 			fmt.Println("Usage: go run . [OPTION] [STRING]")

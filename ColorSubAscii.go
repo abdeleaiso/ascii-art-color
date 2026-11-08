@@ -22,7 +22,7 @@ func IndexSubString(s, sub string) [][2]int{
 	return arr
 }
 
-func ColorSubAscii(input string, filelines []string, sub string, colorN int) string{
+func ColorSubAscii(input string, filelines []string, sub string, colorTheme string) string{
 	if input == ""{
 		return ""
 	}
@@ -30,6 +30,7 @@ func ColorSubAscii(input string, filelines []string, sub string, colorN int) str
 	slice := make([][2]int, nbr)
 	slice = IndexSubString(input, sub)
 	inputLines := strings.Split(input, "\n")
+	
 	isEmpty := true
 	for i:=0; i<len(inputLines); i++{
 		if inputLines[i] != ""{
@@ -64,13 +65,8 @@ func ColorSubAscii(input string, filelines []string, sub string, colorN int) str
 					}
 				}
 
-				if shouldbecolored && StartIndex < len(filelines){
-					var colored string
-					if colorN == 38{
-						colored = fmt.Sprintf("\033[%d;5;208m%s\033[0m",colorN,filelines[StartIndex+i])
-					}else{
-						colored = fmt.Sprintf("\033[2;%dm%s\033[0m",colorN,filelines[StartIndex+i])
-					}
+				if shouldbecolored && StartIndex < len(filelines){					
+					colored := fmt.Sprintf("%s%s\033[0m",colorTheme,filelines[StartIndex+i])
 					sb.WriteString(colored)
 				}else if StartIndex+i < len(filelines){
 					sb.WriteString(filelines[StartIndex+i])
