@@ -88,11 +88,15 @@ func main() {
 		}
 		FileTxt := strings.ReplaceAll(string(FileData), "\r\n", "\n")
 		Filelines := strings.Split(FileTxt, "\n")
+		if input == "" || subinput == "" {
+			fmt.Println("Substring doesn't exist")
+			return
+		}
 		if strings.Contains(input, subinput) {
 			res := ColorSubAscii(input, Filelines, subinput, colorTheme)
 			fmt.Print(res)
 		}else{
-			fmt.Println("Usage: go run . [OPTION] [STRING]")
+			fmt.Println("Substring doesn't exist")
 			return
 		}
 	} else {
