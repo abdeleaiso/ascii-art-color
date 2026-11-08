@@ -15,22 +15,23 @@ It is recommended to use the decimal, octal or hex representation as escape code
 
 func ColorMap(color string) string{
 	m := map[string]string{
-		"black":		"\033[1;30m",
-        "red":			"\033[1;31m",
-        "green":		"\033[1;32m",
-        "yellow":		"\033[1;33m",
-        "blue":			"\033[1;34m",
-        "purple":		"\033[1;35m",
-        "cyan":			"\033[1;36m",
-        "white":		"\033[1;37m",
-        "default":		"\033[1;39m",
-        "gray":			"\033[1;90m",
+		"red":       "\033[38;5;196m",
+		"green":     "\033[38;5;46m",
+		"yellow":    "\033[38;5;226m",
+		"blue":      "\033[38;5;21m",
+		"purple":    "\033[38;5;129m",
+		"cyan":      "\033[38;5;51m",
+		"white":     "\033[38;5;15m",
+		"black":     "\033[38;5;0m",
 
-		"orange":		"\033[38;5;208m",
-        "pink":			"\033[38;5;205m",
-        "gold":			"\033[38;5;220m",
-        "brown":		"\033[38;5;94m",
-		"violet":		"\033[38;5;177m",
+		"orange":    "\033[38;5;208m",
+		"pink":      "\033[38;5;205m",
+		"gold":      "\033[38;5;220m",
+		"brown":     "\033[38;5;94m",
+		"violet":    "\033[38;5;177m",
+		"magenta":   "\033[38;5;201m",
+		"turquoise": "\033[38;5;80m",
+		"gray":      "\033[38;5;245m",
 	}
 	for k,v := range m{
 		if color == k{
